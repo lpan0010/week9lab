@@ -7,9 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActorComponent } from './actor/actor.component';
 import { DatabaseService } from './database.service';
+import { MovieComponent } from './movie/movie.component';
 
 @NgModule({
-  declarations: [AppComponent, ActorComponent],
+  declarations: [AppComponent, ActorComponent, MovieComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [DatabaseService],
   bootstrap: [AppComponent],

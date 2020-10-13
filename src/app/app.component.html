@@ -1,1 +1,30 @@
-<app-actor></app-actor>
+<button
+  button
+  type="submit"
+  class="btn btn-primary"
+  (click)="changeSelected(0)"
+>
+  Home
+</button>
+<button
+  button
+  type="submit"
+  class="btn btn-primary"
+  (click)="changeSelected(1)"
+>
+  Navigate to Actors
+</button>
+<button
+  button
+  type="submit"
+  class="btn btn-primary"
+  (click)="changeSelected(2)"
+>
+  Navigate to Movies
+</button>
+<div *ngIf="selected === 0" class="jumbotron text-center">
+  <h1>Actors & Movies DB System</h1>
+</div>
+
+<app-actor *ngIf="selected === 1"></app-actor>
+<app-movie *ngIf="selected === 2"></app-movie>

@@ -48,12 +48,35 @@ module.exports = {
     });
   },
   deleteOne: function (req, res) {
-    Movie.deleteOne({ _id: req.params.id }, function (err) {
-      if (err) {
-        return res.status(400).json(err);
+    Movie.findOne({ _id: req.params.id }, function (err, movie) {
+      if (err) return res.status(400).json(err);
+      if (!movie) {
+        console.log(req.params.id);
+        return res.status(404).json();
       }
 
-      res.json();
+      if (movie.actors.length > 0) {
+        for (let i; i < movie.actors; i++) {
+          Actor.findOne({ _id: movie.actors[i] }, function (err, actor) {
+            console.log(actor);
+            if (err) {
+              return res.status(400).json(err);
+            }
+            if (!actor) return res.status(404).json();
+            const index = actor.movies.indexOf(req.params.movieid);
+            actor.movies.splice(index, 1);
+            actor.save(function (err) {
+              if (err) return res.status(500).json(err);
+            });
+          });
+        }
+      }
+      Movie.deleteOne({ _id: req.params.id }, function (err) {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        res.json();
+      });
     });
   },
   addActor: function (req, res) {
@@ -90,6 +113,10 @@ module.exports = {
         },
       },
       function (err, movies) {
+        for (let i; i < movies.length; i++) {
+          this.deleteOne(movies[i]);
+        }
+
         if (err) return res.status(400).json(err);
         res.json(movies);
       }
