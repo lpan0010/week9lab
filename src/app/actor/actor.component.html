@@ -16,6 +16,9 @@
     <li class="nav-item" style="padding-left: 0.2in">
       <a class="btn btn-primary" (click)="changeSection(4)">Delete Actor</a>
     </li>
+    <li class="nav-item" style="padding-left: 0.2in">
+      <a class="btn btn-primary" (click)="changeSection(5)">Get Actors After and Equal To 2000</a>
+    </li>
   </ul>
 </nav>
 <!-- First section: Display all in a tble -->
@@ -122,6 +125,19 @@
           Delete
         </button>
       </td>
+    </tr>
+  </table>
+</div>
+<!-- Section 5 -- get actors after and equal to 2000 -->
+<div class="section" *ngIf="section == 5">
+  <table class="table table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Birth Year</th>
+    </tr>
+    <tr *ngFor="let item of actors2000">
+      <td>{{ item.name }}</td>
+      <td>{{ item.bYear }}</td>
     </tr>
   </table>
 </div>

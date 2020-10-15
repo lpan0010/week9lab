@@ -10,6 +10,9 @@ export class DatabaseService {
   getActors() {
     return this.http.get('/actors');
   }
+  getActorsByYear(year){
+    return this.http.get(`/actors/${year}`)
+  }
   getMovies() {
     return this.http.get('/movies');
   }

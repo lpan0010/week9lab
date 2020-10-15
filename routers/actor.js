@@ -33,6 +33,19 @@ module.exports = {
         });
     }
   },
+  getActorsByYear: function(req, res){
+    const year = req.params.year
+    Actor.find({})
+        .where("bYear")
+        .gte(year)
+        .exec(function (err, actors) {
+          if (err) {
+            return res.status(404).json(err);
+          } else {
+            res.json(actors);
+          }
+        });
+  },
   createOne: function (req, res) {
     let newActorDetails = req.body;
     newActorDetails._id = new mongoose.Types.ObjectId();

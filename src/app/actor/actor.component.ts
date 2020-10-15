@@ -9,6 +9,7 @@ import { DatabaseService } from '../database.service';
 export class ActorComponent implements OnInit {
   actorsDB: any[] = [];
   moviesDB: any[] = [];
+  actors2000:any[]=[]
   section = 1;
   fullName: string = '';
   bYear: number = 0;
@@ -19,6 +20,12 @@ export class ActorComponent implements OnInit {
   onGetActors() {
     this.dbService.getActors().subscribe((data: any[]) => {
       this.actorsDB = data;
+    });
+  }
+  //Get all Actors >= 2000
+  onGetActors2000(){
+    this.dbService.getActorsByYear(2000).subscribe((data: any[]) => {
+      this.actors2000 = data;
     });
   }
   //Get all movies
@@ -32,6 +39,7 @@ export class ActorComponent implements OnInit {
     let obj = { name: this.fullName, bYear: this.bYear, movies: [] };
     this.dbService.createActor(obj).subscribe((result) => {
       this.onGetActors();
+      this.onGetActors2000()
     });
   }
   // Update an Actor
@@ -44,12 +52,14 @@ export class ActorComponent implements OnInit {
     let obj = { name: this.fullName, bYear: this.bYear };
     this.dbService.updateActor(this.actorId, obj).subscribe((result) => {
       this.onGetActors();
+      this.onGetActors2000()
     });
   }
   //Delete Actor
   onDeleteActor(item) {
     this.dbService.deleteActor(item._id).subscribe((result) => {
       this.onGetActors();
+      this.onGetActors2000()
     });
   }
 
@@ -57,6 +67,7 @@ export class ActorComponent implements OnInit {
   ngOnInit() {
     this.onGetActors();
     this.onGetMovies();
+    this.onGetActors2000()
   }
   changeSection(sectionId) {
     this.section = sectionId;

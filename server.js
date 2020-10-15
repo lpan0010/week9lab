@@ -20,12 +20,14 @@ mongoose.connect("mongodb://localhost:27017/movies", function (err) {
 app.use("/", express.static(path.join(__dirname, "dist/movieAng")));
 
 app.get("/actors", actors.getAll);
+app.get("/actors/:year", actors.getActorsByYear)
 app.post("/actors", actors.createOne);
 app.get("/actors/:id", actors.getOne);
 app.put("/actors/:id", actors.updateOne);
 app.post("/actors/:id/movies", actors.addMovie);
 app.delete("/actors/:actorid/:movieid", actors.deleteMovie);
 app.delete("/actors/:id", actors.deleteOne);
+
 //Movie RESTFul  endpoints
 app.get("/movies", movies.getAll);
 app.get("/movies/:year1/:year2", movies.getBetween);
